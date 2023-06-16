@@ -7,12 +7,21 @@ import { Pokemon } from "./pokemon"
 	templateUrl: "app.component.html",
 })
 export class AppComponent implements OnInit {
-	pokemonList = POKEMONS
+	pokemonList: Pokemon[] = POKEMONS
+	pokemonSelected: Pokemon | undefined
 	ngOnInit(): void {
 		console.table(this.pokemonList)
 	}
-	selectPokemon(event: MouseEvent) {
-		const index: number = +(event.target as HTMLInputElement).value
-		console.log(`Vous avez clique sur le ${this.pokemonList[index].name}`)
+	selectPokemon(pokemonId: string) {
+		const pokemon: Pokemon | undefined = this.pokemonList.find(
+			(pokemon) => pokemon.id == +pokemonId
+		)
+		if (pokemon) {
+			console.log(`Vous avez demande le ${pokemon.name}`)
+			this.pokemonSelected = pokemon
+		} else {
+			console.log("existe pas")
+			this.pokemonSelected = pokemon
+		}
 	}
 }
