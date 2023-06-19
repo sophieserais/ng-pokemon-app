@@ -1,4 +1,4 @@
-import { Directive, ElementRef, HostListener, INJECTOR, Input } from "@angular/core"
+import { Directive, ElementRef, HostListener, Input } from "@angular/core"
 
 @Directive({
 	selector: "[pkmnBorderCard]",
