@@ -1,7 +1,14 @@
 import { Component, OnInit } from "@angular/core"
-import { Pokemon } from "../pokemon"
 import { Router } from "@angular/router"
-import { Observable, Subject, debounceTime, distinctUntilChanged, switchMap } from "rxjs"
+import {
+	debounceTime,
+	distinctUntilChanged,
+	filter,
+	Observable,
+	Subject,
+	switchMap,
+} from "rxjs"
+import { Pokemon } from "../pokemon"
 import { PokemonService } from "../pokemon.service"
 
 @Component({
@@ -16,9 +23,13 @@ export class SearchPokemonComponent implements OnInit {
 
 	ngOnInit(): void {
 		this.pokemons$ = this.searchTerms.pipe(
+			// {...."ab"..."abz"."ab"...."abc"......}
 			debounceTime(300),
+			// {......"ab"...."ab"...."abc"......}
 			distinctUntilChanged(),
+			// {......"ab"..........."abc"......}
 			switchMap((term) => this.pokemonService.searchPokemonList(term))
+			// {.....pokemonList(ab)............pokemonList(abc)......}
 		)
 	}
 
